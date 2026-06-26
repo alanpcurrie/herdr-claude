@@ -76,6 +76,6 @@ each agent's history as its own visible bubble in the graph.
 
 The beauty is that the approach is indifferent to headcount. Eight agents or
 eighty, the math is the same: partition the surface area, fix the contracts, let
-everyone run flat-out in their own [worktree](/blog). Conflicts aren't *resolved*
+everyone run flat-out in their own [worktree](/blog/a-worktrees-parallel). Conflicts aren't *resolved*
 here — they're *designed out*. And a conflict that can't happen is the only kind
 worth planning for.

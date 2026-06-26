@@ -13,7 +13,7 @@ was happening, live, in a terminal, all at once.
 ## The grid
 
 The screen was split into eight panes. Not tabs you flip between — eight live
-shells, side by side, tiled by [herdr](/blog), the terminal multiplexer this whole
+shells, side by side, tiled by [herdr](/blog/a-what-is-herdr), the terminal multiplexer this whole
 blog is a love letter to. Each pane was a `herd` member. Each member was a
 [Claude Code](https://claude.com/claude-code) agent. Each agent had been handed a
 single, narrow slice of the same Astro 7 project and told: build only your slice,
@@ -31,7 +31,7 @@ touch nothing else.
 
 ## Eight worktrees, one repo
 
-The trick that made parallelism safe was [git worktrees](/blog). One repository,
+The trick that made parallelism safe was [git worktrees](/blog/a-worktrees-parallel). One repository,
 eight checked-out branches, eight directories on disk — no agent ever standing in
 another's filesystem. The conductor stamped out the worktrees up front:
 
