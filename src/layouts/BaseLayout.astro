@@ -1,0 +1,65 @@
+---
+// OWNER: Agent 2 (base layout).
+// CONTRACT: takes { title, description? }, renders Head, Header, <slot/>, Footer,
+// imports global.css. Adds a skip-to-content link and an accessible <main>.
+import Head from '../components/Head.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description } = Astro.props;
+---
+<html lang="en">
+  <head>
+    <Head title={title} description={description} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  /* Layout-level structure using the design tokens. Visual theme lives in global.css. */
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  main {
+    flex: 1 0 auto;
+    width: 100%;
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding: 2.5rem 1.25rem 4rem;
+  }
+
+  /* Accessible skip link — hidden until focused. */
+  .skip-link {
+    position: absolute;
+    left: 0.75rem;
+    top: -3rem;
+    z-index: 100;
+    padding: 0.5rem 0.9rem;
+    background: var(--bg-elev);
+    color: var(--fg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: top 0.15s ease;
+  }
+  .skip-link:focus {
+    top: 0.75rem;
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+</style>

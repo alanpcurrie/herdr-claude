@@ -1,0 +1,194 @@
+---
+// OWNER: Agent 7 (about page).
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const agents = [
+  { n: 1, role: "Design system", desc: "global.css and the dark terminal palette" },
+  { n: 2, role: "Base layout", desc: "the shell every page renders inside" },
+  { n: 3, role: "Chrome", desc: "header, footer, and SEO head" },
+  { n: 4, role: "Home page", desc: "the landing grid" },
+  { n: 5, role: "Post layout", desc: "how an individual article is framed" },
+  { n: 6, role: "Blog index", desc: "the list of everything written" },
+  { n: 7, role: "Words", desc: "the posts and this very page" },
+  { n: 8, role: "Syndication", desc: "the RSS feed" },
+];
+---
+<BaseLayout
+  title="About"
+  description="A meta dev blog built by eight AI subagents in a herdr grid, documenting its own construction."
+>
+  <article class="about">
+    <h1>About this blog</h1>
+
+    <p class="lede">
+      This is a dev blog that documents the very demo that built it: eight AI
+      subagents, working in parallel, assembling an Astro site about the tools
+      they were using to assemble it.
+    </p>
+
+    <h2>The herd metaphor</h2>
+    <p>
+      A <strong>herd</strong> is a group that moves together without a single one
+      of them being in charge of the others. That is exactly how this site was
+      made. Each agent grazed its own patch — a layout here, a stylesheet there,
+      a couple of posts — and the result moved as one. No member needed to watch
+      the others; they only needed to head the same direction. The terminal grid
+      that held them is named for the idea: <strong>herdr</strong>.
+    </p>
+
+    <h2>The tech</h2>
+    <ul class="tech">
+      <li>
+        <span class="k">Astro</span>
+        <span>The content-first web framework. Static by default, fast by
+        nature — a natural fit for a blog assembled from many small, independent
+        pieces.</span>
+      </li>
+      <li>
+        <span class="k">herdr</span>
+        <span>A terminal multiplexer that tiled eight live shells into one grid,
+        so a human could watch the whole herd work at a glance.</span>
+      </li>
+      <li>
+        <span class="k">git worktrees</span>
+        <span>One repository, eight checked-out branches, eight directories on
+        disk. The isolation that let everyone run flat-out without standing on
+        each other's files.</span>
+      </li>
+      <li>
+        <span class="k">Claude Code</span>
+        <span>The agent driving each pane — reading its brief, honoring the shared
+        contracts, and writing only the files it owned.</span>
+      </li>
+    </ul>
+
+    <h2>The eight agents</h2>
+    <p>
+      Credit where it's due. This site exists because eight agents each took one
+      slice and trusted the rest of the herd with theirs:
+    </p>
+    <ol class="agents">
+      {agents.map((a) => (
+        <li>
+          <span class="badge">Agent {a.n}</span>
+          <span class="agent-role">{a.role}</span>
+          <span class="agent-desc">{a.desc}</span>
+        </li>
+      ))}
+    </ol>
+
+    <p class="outro">
+      Want the full story? Read <a href="/blog/b-the-demo-that-built-itself">the
+      demo that built itself</a>, or the trick behind
+      <a href="/blog/b-conflict-free-merges">eight conflict-free merges</a>.
+    </p>
+  </article>
+
+  <style>
+    .about {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      font-family: var(--font-sans);
+      color: var(--fg);
+      line-height: 1.7;
+    }
+    .about h1 {
+      font-size: 2.4rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+    .about h2 {
+      margin-top: 2.5rem;
+      margin-bottom: 0.75rem;
+      font-size: 1.4rem;
+      color: var(--accent);
+    }
+    .lede {
+      font-size: 1.2rem;
+      color: var(--muted);
+      border-left: 3px solid var(--accent);
+      padding-left: 1rem;
+    }
+    .about a {
+      color: var(--accent-2);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s ease;
+    }
+    .about a:hover {
+      border-bottom-color: var(--accent-2);
+    }
+    .tech {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      gap: 0.75rem;
+    }
+    .tech li {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      transition: border-color 0.15s ease, transform 0.15s ease;
+    }
+    .tech li:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .tech .k {
+      display: block;
+      font-family: var(--font-mono);
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .tech li span:last-child {
+      color: var(--muted);
+    }
+    .agents {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      gap: 0.5rem;
+    }
+    .agents li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-areas: "badge role" "badge desc";
+      column-gap: 1rem;
+      align-items: baseline;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .agents li:last-child {
+      border-bottom: none;
+    }
+    .badge {
+      grid-area: badge;
+      align-self: center;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-2);
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.25rem 0.6rem;
+      white-space: nowrap;
+    }
+    .agent-role {
+      grid-area: role;
+      font-weight: 600;
+    }
+    .agent-desc {
+      grid-area: desc;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .outro {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+    }
+  </style>
+</BaseLayout>

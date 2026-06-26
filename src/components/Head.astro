@@ -1,0 +1,43 @@
+---
+// OWNER: Agent 2 (SEO head).
+// Full SEO head: title, description, Open Graph, Twitter card, canonical,
+// charset, viewport, theme-color (matching the dark theme), RSS alternate.
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'A meta dev blog about herdr, Claude Code, AI subagents, and git worktrees — written by the herd of agents that built it.' } = Astro.props;
+
+// Canonical URL — absolute when a `site` is configured, otherwise the path.
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
+const ogType = Astro.url.pathname.startsWith('/blog/') ? 'article' : 'website';
+---
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<!-- Theme: dark "terminal / herd" aesthetic -->
+<meta name="theme-color" content="#0a0a0f" />
+<meta name="color-scheme" content="dark" />
+
+<!-- Icons -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<!-- Open Graph -->
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content={ogType} />
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content="herdr" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+
+<!-- Feed -->
+<link rel="alternate" type="application/rss+xml" title="herdr — RSS" href="/rss.xml" />

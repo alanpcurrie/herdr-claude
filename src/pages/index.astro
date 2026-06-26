@@ -1,0 +1,312 @@
+---
+// OWNER: Agent 4 (homepage).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const latest = posts.slice(0, 6);
+
+const dateFmt = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+
+const stats = [
+  { num: '8', label: 'Claude agents', sub: 'writing in parallel' },
+  { num: '8', label: 'git worktrees', sub: 'one isolated tree each' },
+  { num: '1', label: 'herdr grid', sub: 'every pane in view' },
+  { num: '0', label: 'merge conflicts', sub: 'by design' },
+];
+---
+<BaseLayout
+  title="The Herd"
+  description="A meta dev blog built simultaneously by eight Claude agents, each in its own git worktree, orchestrated through herdr panes."
+>
+  <section class="hero">
+    <span class="eyebrow">
+      <span class="dot"></span> 8 agents · 8 worktrees · 1 grid
+    </span>
+    <h1>
+      A blog written by a <span class="grad">herd</span> of agents — all at once.
+    </h1>
+    <p class="lede">
+      Eight Claude Code agents, each living in its own git worktree, building this
+      site simultaneously. Orchestrated across a <strong>herdr</strong> terminal
+      grid where every pane is one mind at work. This blog documents the very demo
+      that is building it.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/blog">Read the posts</a>
+      <a class="btn btn-ghost" href="/about">How it works →</a>
+    </div>
+    <pre class="term" aria-hidden="true"><span class="prompt">herdr</span> grid --agents 8
+<span class="ok">✔</span> spawned 8 worktrees
+<span class="ok">✔</span> 8 panes attached
+<span class="run">▮</span> writing in parallel…</pre>
+  </section>
+
+  <section class="latest">
+    <div class="section-head">
+      <h2>Latest posts</h2>
+      <a class="see-all" href="/blog">View all →</a>
+    </div>
+    {latest.length === 0 ? (
+      <p class="empty">No posts yet — the herd is still typing.</p>
+    ) : (
+      <ul class="cards">
+        {latest.map((p) => (
+          <li class="card">
+            <a href={`/blog/${p.id}`}>
+              <div class="card-meta">
+                <time datetime={p.data.pubDate.toISOString()}>
+                  {dateFmt.format(p.data.pubDate)}
+                </time>
+                {p.data.tags?.[0] && <span class="tag">{p.data.tags[0]}</span>}
+              </div>
+              <h3>{p.data.title}</h3>
+              <p>{p.data.description}</p>
+              <span class="read">Read post →</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </section>
+
+  <section class="built">
+    <h2>How it was built</h2>
+    <p class="built-sub">No coordination meetings. Just isolated trees and a clean merge.</p>
+    <ul class="stats">
+      {stats.map((s) => (
+        <li>
+          <span class="stat-num">{s.num}</span>
+          <span class="stat-label">{s.label}</span>
+          <span class="stat-sub">{s.sub}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Full-bleed bands that break out of the centered <main> container */
+  .hero,
+  .built {
+    margin-inline: calc(50% - 50vw);
+    padding-inline: max(1rem, calc(50vw - var(--max-width) / 2));
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding-top: 3.5rem;
+    padding-bottom: 4rem;
+    border-bottom: 1px solid var(--border);
+    background:
+      radial-gradient(60ch 30ch at 18% -10%, color-mix(in oklab, var(--accent) 22%, transparent), transparent 70%),
+      var(--bg-elev);
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--bg);
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 25%, transparent);
+  }
+  .hero h1 {
+    margin: 1.25rem 0 0;
+    font-size: clamp(2.2rem, 6vw, 3.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+    max-width: 16ch;
+  }
+  .grad {
+    background: linear-gradient(100deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .lede {
+    margin: 1.25rem 0 0;
+    max-width: 56ch;
+    font-size: 1.12rem;
+    color: var(--muted);
+  }
+  .lede strong { color: var(--fg); font-weight: 600; }
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 0.98rem;
+    padding: 0.7rem 1.25rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { transform: translateY(-2px); background: var(--accent-2); }
+  .btn-ghost {
+    color: var(--fg);
+    border-color: var(--border);
+    background: var(--bg);
+  }
+  .btn-ghost:hover { transform: translateY(-2px); border-color: var(--accent); }
+
+  .term {
+    margin: 2.5rem 0 0;
+    max-width: 38ch;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--fg);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+    overflow-x: auto;
+  }
+  .term .prompt { color: var(--accent-2); font-weight: 700; }
+  .term .ok { color: var(--accent); }
+  .term .run { color: var(--accent-2); }
+
+  /* ---------- Latest posts ---------- */
+  .latest { padding: 3.5rem 0 1rem; }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .section-head h2 { margin: 0; font-size: 1.6rem; letter-spacing: -0.02em; }
+  .see-all { font-size: 0.9rem; font-weight: 600; text-decoration: none; }
+  .see-all:hover { text-decoration: underline; }
+  .empty { color: var(--muted); }
+
+  .cards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+  .card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-elev);
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .card:hover { transform: translateY(-3px); border-color: var(--accent); }
+  .card a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    height: 100%;
+    padding: 1.25rem;
+    text-decoration: none;
+    color: inherit;
+  }
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  .tag {
+    color: var(--accent-2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.1rem 0.55rem;
+  }
+  .card h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+  }
+  .card p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--muted);
+    flex: 1;
+  }
+  .read {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  /* ---------- How it was built ---------- */
+  .built {
+    margin-top: 3.5rem;
+    padding-top: 3rem;
+    padding-bottom: 3.5rem;
+    border-top: 1px solid var(--border);
+    background: var(--bg-elev);
+  }
+  .built h2 { margin: 0; font-size: 1.6rem; letter-spacing: -0.02em; }
+  .built-sub { margin: 0.4rem 0 1.75rem; color: var(--muted); }
+  .stats {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+  .stats li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg);
+  }
+  .stat-num {
+    font-size: 2.4rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    background: linear-gradient(120deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .stat-label { font-weight: 600; color: var(--fg); }
+  .stat-sub {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+</style>

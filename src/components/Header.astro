@@ -1,0 +1,118 @@
+---
+// OWNER: Agent 3 (header/nav).
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/blog", label: "Blog" },
+  { href: "/about", label: "About" },
+  { href: "/rss.xml", label: "RSS" },
+];
+---
+<header class="site-header">
+  <div class="bar">
+    <a href="/" class="wordmark" aria-label="the herd — home">
+      <span class="glyph" aria-hidden="true">▟</span>
+      <span class="name">the herd</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      {links.map((l) => (
+        <a class="nav-link" href={l.href}>{l.label}</a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .bar {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0.85rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    text-decoration: none;
+    color: var(--fg);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    font-size: 1.05rem;
+  }
+
+  .glyph {
+    display: inline-grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: var(--radius);
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: var(--bg);
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    line-height: 1;
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent);
+    transition: transform 0.18s ease;
+  }
+
+  .wordmark:hover .glyph {
+    transform: translateY(-1px) rotate(-4deg);
+  }
+
+  .name {
+    font-family: var(--font-mono);
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+  }
+
+  .nav-link {
+    position: relative;
+    padding: 0.4rem 0.7rem;
+    border-radius: var(--radius);
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.16s ease, background 0.16s ease;
+  }
+
+  .nav-link:hover,
+  .nav-link:focus-visible {
+    color: var(--fg);
+    background: var(--bg-elev);
+    outline: none;
+  }
+
+  .nav-link[aria-current="page"] {
+    color: var(--accent);
+  }
+
+  @media (max-width: 480px) {
+    .bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+    .nav {
+      margin-left: -0.7rem;
+    }
+  }
+</style>

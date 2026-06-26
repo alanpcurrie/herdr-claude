@@ -1,0 +1,113 @@
+---
+// OWNER: Agent 3 (footer).
+const year = new Date().getFullYear();
+const links = [
+  { href: "/blog", label: "Blog" },
+  { href: "/about", label: "About" },
+  { href: "/rss.xml", label: "RSS" },
+];
+---
+<footer class="site-footer">
+  <div class="inner">
+    <div class="brand">
+      <span class="glyph" aria-hidden="true">▟</span>
+      <span class="credit">
+        Built in parallel by 8 agents in 8 git worktrees, multiplexed by
+        <span class="herdr">herdr</span>.
+      </span>
+    </div>
+    <nav class="links" aria-label="Footer">
+      {links.map((l) => (
+        <a href={l.href}>{l.label}</a>
+      ))}
+    </nav>
+    <p class="meta">© {year} the herd</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: 4rem;
+    border-top: 1px solid var(--border);
+    background: var(--bg-elev);
+  }
+
+  .inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 1.5rem;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex: 1 1 320px;
+    min-width: 0;
+  }
+
+  .glyph {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: var(--radius);
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: var(--bg);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    line-height: 1;
+  }
+
+  .credit {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .herdr {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.16s ease;
+  }
+
+  .links a:hover,
+  .links a:focus-visible {
+    color: var(--fg);
+    outline: none;
+  }
+
+  .meta {
+    margin: 0;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 540px) {
+    .inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
