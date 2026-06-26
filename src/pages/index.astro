@@ -2,6 +2,7 @@
 // OWNER: Agent 4 (homepage).
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { withBase } from '../utils/paths';
 
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -39,8 +40,8 @@ const stats = [
       that is building it.
     </p>
     <div class="cta-row">
-      <a class="btn btn-primary" href="/blog">Read the posts</a>
-      <a class="btn btn-ghost" href="/about">How it works →</a>
+      <a class="btn btn-primary" href={withBase("/blog")}>Read the posts</a>
+      <a class="btn btn-ghost" href={withBase("/about")}>How it works →</a>
     </div>
     <pre class="term" aria-hidden="true"><span class="prompt">herdr</span> grid --agents 8
 <span class="ok">✔</span> spawned 8 worktrees
@@ -51,7 +52,7 @@ const stats = [
   <section class="latest">
     <div class="section-head">
       <h2>Latest posts</h2>
-      <a class="see-all" href="/blog">View all →</a>
+      <a class="see-all" href={withBase("/blog")}>View all →</a>
     </div>
     {latest.length === 0 ? (
       <p class="empty">No posts yet — the herd is still typing.</p>
@@ -59,7 +60,7 @@ const stats = [
       <ul class="cards">
         {latest.map((p) => (
           <li class="card">
-            <a href={`/blog/${p.id}`}>
+            <a href={withBase(`/blog/${p.id}`)}>
               <div class="card-meta">
                 <time datetime={p.data.pubDate.toISOString()}>
                   {dateFmt.format(p.data.pubDate)}

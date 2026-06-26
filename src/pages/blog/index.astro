@@ -2,6 +2,7 @@
 // OWNER: Agent 5 (blog index). Lists all posts as elegant cards, newest first.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { withBase } from '../../utils/paths';
 
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -26,7 +27,7 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
   <ul class="post-list">
     {posts.map((p) => (
       <li class="post-card">
-        <a class="card-link" href={`/blog/${p.id}`}>
+        <a class="card-link" href={withBase(`/blog/${p.id}`)}>
           <time class="card-date" datetime={p.data.pubDate.toISOString()}>
             {dateFmt.format(p.data.pubDate)}
           </time>

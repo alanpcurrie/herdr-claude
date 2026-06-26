@@ -1,5 +1,7 @@
 ---
 // OWNER: Agent 3 (header/nav).
+import { withBase } from '../utils/paths';
+
 const links = [
   { href: "/", label: "Home" },
   { href: "/blog", label: "Blog" },
@@ -9,13 +11,13 @@ const links = [
 ---
 <header class="site-header">
   <div class="bar">
-    <a href="/" class="wordmark" aria-label="the herd — home">
+    <a href={withBase("/")} class="wordmark" aria-label="the herd — home">
       <span class="glyph" aria-hidden="true">▟</span>
       <span class="name">the herd</span>
     </a>
     <nav class="nav" aria-label="Primary">
       {links.map((l) => (
-        <a class="nav-link" href={l.href}>{l.label}</a>
+        <a class="nav-link" href={withBase(l.href)}>{l.label}</a>
       ))}
     </nav>
   </div>

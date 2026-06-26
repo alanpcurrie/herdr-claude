@@ -1,6 +1,7 @@
 ---
 // OWNER: Agent 7 (about page).
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../utils/paths';
 
 const agents = [
   { n: 1, role: "Design system", desc: "global.css and the dark terminal palette" },
@@ -78,9 +79,9 @@ const agents = [
     </ol>
 
     <p class="outro">
-      Want the full story? Read <a href="/blog/b-the-demo-that-built-itself">the
+      Want the full story? Read <a href={withBase("/blog/b-the-demo-that-built-itself")}>the
       demo that built itself</a>, or the trick behind
-      <a href="/blog/b-conflict-free-merges">eight conflict-free merges</a>.
+      <a href={withBase("/blog/b-conflict-free-merges")}>eight conflict-free merges</a>.
     </p>
   </article>
 

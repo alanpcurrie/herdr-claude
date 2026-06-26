@@ -2,6 +2,7 @@
 // OWNER: Agent 5 (post layout). Clean, readable long-form article layout.
 // CONTRACT: takes a CollectionEntry<'blog'>.data as `frontmatter`, renders <slot/> as post body.
 import BaseLayout from './BaseLayout.astro';
+import { withBase } from '../utils/paths';
 
 interface Props {
   frontmatter: { title: string; description: string; pubDate: Date; tags: string[] };
@@ -17,7 +18,7 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
 <BaseLayout title={frontmatter.title} description={frontmatter.description}>
   <article class="post">
     <header class="post-head">
-      <a class="back-link" href="/blog">← Back to blog</a>
+      <a class="back-link" href={withBase("/blog")}>← Back to blog</a>
       <h1>{frontmatter.title}</h1>
       <div class="post-meta">
         <time datetime={frontmatter.pubDate.toISOString()}>{formattedDate}</time>
@@ -36,7 +37,7 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
     </div>
 
     <footer class="post-foot">
-      <a class="back-link" href="/blog">← Back to blog</a>
+      <a class="back-link" href={withBase("/blog")}>← Back to blog</a>
     </footer>
   </article>
 </BaseLayout>

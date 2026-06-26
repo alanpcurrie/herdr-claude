@@ -2,6 +2,8 @@
 // OWNER: Agent 2 (SEO head).
 // Full SEO head: title, description, Open Graph, Twitter card, canonical,
 // charset, viewport, theme-color (matching the dark theme), RSS alternate.
+import { withBase } from '../utils/paths';
+
 interface Props {
   title: string;
   description?: string;
@@ -25,7 +27,7 @@ const ogType = Astro.url.pathname.startsWith('/blog/') ? 'article' : 'website';
 <meta name="color-scheme" content="dark" />
 
 <!-- Icons -->
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
 
 <!-- Open Graph -->
 <meta property="og:title" content={title} />
@@ -40,4 +42,4 @@ const ogType = Astro.url.pathname.startsWith('/blog/') ? 'article' : 'website';
 <meta name="twitter:description" content={description} />
 
 <!-- Feed -->
-<link rel="alternate" type="application/rss+xml" title="herdr — RSS" href="/rss.xml" />
+<link rel="alternate" type="application/rss+xml" title="herdr — RSS" href={withBase("/rss.xml")} />
